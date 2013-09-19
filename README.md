@@ -1,4 +1,4 @@
-# Slides for *From Ruby 1.8 to 1.9, Practical Way*
+# Slides for *"From Ruby 1.8 to 1.9, Practical Way"*
 
 ### By Bachue Zhou
 
