@@ -1,63 +1,596 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>$ diff ruby18 ruby19 by bachue</title>
+    <title>$ diff rb18 rb19</title>
+    <link href="css/reset.css" rel="stylesheet" />
+    <meta name="author" content="Bachue Zhou">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="shortcut icon" href="css/favicon.png" />
+    <link rel="apple-touch-icon" href="css/apple-touch-icon.png" />
+    <!-- Code Prettifier: -->
+<link href="css/highlight.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link href="css/style.css" rel="stylesheet" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,800italic,300,400,800' rel='stylesheet' type='text/css'>    
+
+
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>$ diff ruby18 ruby19</h1>
-        <p>Slides for &quot;$ diff ruby18 ruby19&quot;</p>
-
-        <p class="view"><a href="https://github.com/bachue/slides-for-diff-rb18-rb19">View the Project on GitHub <small>bachue/slides-for-diff-rb18-rb19</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/bachue/slides-for-diff-rb18-rb19/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/bachue/slides-for-diff-rb18-rb19/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/bachue/slides-for-diff-rb18-rb19">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h2>
-<a name="slides-for--diff-ruby18-ruby19" class="anchor" href="#slides-for--diff-ruby18-ruby19"><span class="octicon octicon-link"></span></a>Slides for <em>"$ diff ruby18 ruby19"</em>
-</h2>
-
-<h5>
-<a name="by-bachue-zhou" class="anchor" href="#by-bachue-zhou"><span class="octicon octicon-link"></span></a>By Bachue Zhou</h5>
-
-<h5>
-<a name="details-2013%E5%B9%B49%E6%9C%88%E5%91%A8%E6%9C%AB%E8%81%9A%E4%BC%9A%E5%8F%AC%E9%9B%86" class="anchor" href="#details-2013%E5%B9%B49%E6%9C%88%E5%91%A8%E6%9C%AB%E8%81%9A%E4%BC%9A%E5%8F%AC%E9%9B%86"><span class="octicon octicon-link"></span></a>details: <a href="http://shruby.github.io/monthly/callup/2013/09/13/call-2013-sept-weekend.html">2013年9月周末聚会召集</a>
-</h5>
-
-<h2>
-<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h2>
-
-<div class="highlight highlight-bash"><pre>bundle install
-</pre></div>
-
-<h2>
-<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
-
-<div class="highlight highlight-bash"><pre>mdpress demo.md
-open demo/index.html
-</pre></div>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/bachue">bachue</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
+  <div class="fallback-message">
+  <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+  <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+  </div>
+    <div id="impress">
+    <div class='step' >
     
+<style type="text/css">
+  pre code { background: transparent; }
+</style>
+
+<h1>$ diff rb18 rb19</h1>
+</div>
+      <div class='step' >
+    
+<h2>Our Goal</h2>
+
+<h3>OS</h3>
+
+<ul>
+<li>Debian to Ubuntu 12</li>
+</ul>
+
+<h3>PostgreSQL</h3>
+
+<ul>
+<li>8.4 to 9.1</li>
+</ul>
+
+<h3>Ruby</h3>
+
+<ul>
+<li>1.8.7 to 2.0</li>
+</ul>
+
+<h3>Rails</h3>
+
+<ul>
+<li>2.3.18 to 3.2 (4.0?)</li>
+</ul>
+
+<h3>Other used gems</h3>
+</div>
+      <div class='step' >
+    
+<h2>begin</h2>
+
+<h3>&nbsp;&nbsp;<code class='inline prettyprint'>upgrade(:ruby_18, :ruby_19)</code></h3>
+
+<h3><code class='inline prettyprint'>rescue</code></h3>
+
+<h4>&nbsp;&nbsp;<code class='inline prettyprint'>fix and retry</code></h4>
+
+<h3><code class='inline prettyprint'>end</code></h3>
+</div>
+      <div class='step' >
+    
+<h1>Syntax Check First</h1>
+<pre><code class='prettyprint bash'>$ find . -name '&#42;.rb' -type f -exec ruby -c {} \; | \
+    grep -v 'Syntax OK'
+</code></pre></div>
+      <div class='step' >
+    
+<h2>Colon in Ruby 1.8</h2>
+
+<ol>
+<li>case ... when</li>
+</ol>
+<pre><code class='prettyprint ruby'>case
+when 1: 'a'
+when 2: 'b'
+when 3: 'c'
+end
+</code></pre>
+<ol>
+<li>if, unless, while, until</li>
+</ol>
+<pre><code class='prettyprint ruby'>if a == b: c else d end
+</code></pre></div>
+      <div class='step' >
+    
+<h2>Colon in Ruby 1.9</h2>
+
+<ol>
+<li>case ... when</li>
+</ol>
+<pre><code class='prettyprint ruby'>case
+when 1 then 'a'
+when 2 then 'b'
+when 3 then 'c'
+end
+</code></pre>
+<ol>
+<li>if, unless, while, until</li>
+</ol>
+<pre><code class='prettyprint ruby'>if a == b then c else d end
+</code></pre></div>
+      <div class='step' >
+    
+<h2>Parentheses in Ruby 1.8</h2>
+<pre><code class='prettyprint ruby'>[f 1, 2]
+</code></pre></div>
+      <div class='step' >
+    
+<h2>Parentheses in Ruby 1.8</h2>
+<pre><code class='prettyprint ruby'>[f 1, 2] # ambiguous! [f(1), 2] ? or [f(1, 2)] ?
+</code></pre></div>
+      <div class='step' >
+    
+<h2>Parentheses in Ruby 1.9</h2>
+<pre><code class='prettyprint ruby'>[f(1, 2)]
+</code></pre></div>
+      <div class='step' >
+    
+<h2>Encoding</h2>
+
+<ul>
+<li>Ruby 1.8: Simple &amp; Easy</li>
+<li>Ruby 1.9: Powerful</li>
+</ul>
+</div>
+      <div class='step' >
+    
+<h2>In Rails 2.3</h2>
+<pre><code class='prettyprint ruby'>content = File.read '/bin/sh'
+content.blank?
+# => ArgumentError: invalid byte sequence in UTF-8
+</code></pre></div>
+      <div class='step' >
+    
+<style type="text/css">
+  #step-12 pre code { font-size: 60%; line-height: 24px; }
+</style>
+
+<h2>PATCH</h2>
+<pre><code class='prettyprint ruby'>if defined?(Encoding)
+  class String
+    def blank?
+      begin
+        self !~ /\S/
+      rescue ArgumentError
+        if /invalid byte sequence/ =~ $!.message && !@_tried_to_fix_encoding_error_in_ruby_19
+          self.force_encoding(Encoding::BINARY)
+          @_tried_to_fix_encoding_error_in_ruby_19 = true
+          retry
+        else
+          raise
+        end
+      end
+    end
+  end
+end
+</code></pre>
+<blockquote>
+<p><a href="https://developer.uservoice.com/blog/2012/03/04/how-to-upgrade-a-rails-2-3-app-to-ruby-1-9-3/">And Apply this Patch</a></p>
+</blockquote>
+</div>
+      <div class='step' >
+    
+<h2>Lambda bug in Ruby 1.8</h2>
+</div>
+      <div class='step' >
+    
+<h1>More diffs</h1>
+</div>
+      <div class='step' >
+    
+<h2>YAML Engine</h2>
+
+<ul>
+<li>Ruby 1.8: syck</li>
+<li>Ruby 1.9: psych</li>
+</ul>
+</div>
+      <div class='step' >
+    
+<h2>Compatibility</h2>
+
+<ul>
+<li>BAD</li>
+<li><a href="http://galeki.is-programmer.com/posts/32636.html">example</a></li>
+<li>Switch ( Not Recommanded ) :</li>
+</ul>
+<pre><code class='prettyprint ruby'>begin
+  require 'syck'
+rescue LoadError
+end
+require 'yaml'
+YAML::ENGINE.yamler = 'syck' if defined?(YAML::ENGINE)
+ENV['TEST_SYCK'] = 'true'
+</code></pre></div>
+      <div class='step' >
+    
+<h2>Require in Ruby</h2>
+
+<ul>
+<li>Ruby 1.8:</li>
+</ul>
+<pre><code class='prettyprint ruby'>require 'config/boot'
+</code></pre>
+<ul>
+<li>Ruby 1.9:</li>
+</ul>
+<pre><code class='prettyprint ruby'>require_relative 'config/boot'
+</code></pre>
+<ul>
+<li>Compatible:</li>
+</ul>
+<pre><code class='prettyprint ruby'>require File.expand_path(File.dirname(__FILE__) + '/config/boot')
+</code></pre></div>
+      <div class='step' >
+    
+<h1>Object</h1>
+
+<h2>Object#to_s</h2>
+
+<ul>
+<li>Ruby 1.8:</li>
+</ul>
+<pre><code class='prettyprint ruby'>[1,2,3,:four,[5,6], {:seven => 8}].to_s
+# => "123four56seven8"
+</code></pre>
+<ul>
+<li>Ruby 1.9:</li>
+</ul>
+<pre><code class='prettyprint ruby'>[1,2,3,:four,[5,6], {:seven => 8}].to_s
+# => "[1, 2, 3, :four, [5, 6], {:seven=>8}]"
+</code></pre>
+<ul>
+<li>Should avoid using this method</li>
+</ul>
+</div>
+      <div class='step' >
+    
+<h1>String</h1>
+</div>
+      <div class='step' >
+    
+<h2>String#[]</h2>
+
+<ul>
+<li>Ruby 1.8:</li>
+</ul>
+<pre><code class='prettyprint ruby'>'hello'[0]
+# => 104
+</code></pre>
+<ul>
+<li>Ruby 1.9:</li>
+</ul>
+<pre><code class='prettyprint ruby'>'hello'[0]
+# => "h"
+</code></pre>
+<ul>
+<li>Compatible:</li>
+</ul>
+<pre><code class='prettyprint ruby'>'hello'[0].chr
+# => "h"
+</code></pre></div>
+      <div class='step' >
+    
+<h2>String#length</h2>
+
+<ul>
+<li>Ruby 1.8:</li>
+</ul>
+<pre><code class='prettyprint ruby'>'你好'.length
+# => 6
+</code></pre>
+<ul>
+<li>Ruby 1.9:</li>
+</ul>
+<pre><code class='prettyprint ruby'>'你好'.length
+# => 2
+</code></pre>
+<ul>
+<li>Compatible:</li>
+</ul>
+<pre><code class='prettyprint ruby'>'你好'.bytesize
+# => 6
+</code></pre></div>
+      <div class='step' >
+    
+<h1>Array</h1>
+</div>
+      <div class='step' >
+    
+<h2>Convert to Array</h2>
+
+<ul>
+<li>Ruby 1.8: Object#to_a</li>
+<li>Ruby 1.9: Array()</li>
+</ul>
+</div>
+      <div class='step' >
+    
+<h2>Random choice</h2>
+
+<ul>
+<li>Ruby 1.8:</li>
+</ul>
+<pre><code class='prettyprint ruby'>[1, 2, 3, 4].choice
+</code></pre>
+<ul>
+<li>Ruby 1.9:</li>
+</ul>
+<pre><code class='prettyprint ruby'>[1, 2, 3, 4].sample
+</code></pre></div>
+      <div class='step' >
+    
+<h2>Array(string)</h2>
+
+<ul>
+<li>Ruby 1.8:</li>
+</ul>
+<pre><code class='prettyprint ruby'>Array("21312\n423424\n234234")
+# => ["21312\n", "423424\n", "234234"]
+</code></pre>
+<ul>
+<li>Ruby 1.9:</li>
+</ul>
+<pre><code class='prettyprint ruby'>Array("21312\n423424\n234234")
+# => ["21312\n423424\n234234"]
+</code></pre>
+<ul>
+<li>This is the reason why Rails 2.3 Cookie cannot work in Ruby 1.9</li>
+</ul>
+</div>
+      <div class='step' >
+    
+<h2>Patch</h2>
+<pre><code class='prettyprint ruby'>unless ''.respond_to?(:each)
+  module Kernel
+    def Array_with_rb19_fix(element)
+      if !element.nil? && element.is_a?(String)
+        Array_without_rb19_fix(element.each_line)
+      else
+        Array_without_rb19_fix element
+      end
+    end
+
+    alias_method_chain :Array, :rb19_fix
+  end
+end
+</code></pre></div>
+      <div class='step' >
+    
+<h1>Symbol</h1>
+
+<ul>
+<li>Ruby 1.8: Symbol#to_i</li>
+<li>Ruby 1.9: could be like Symbol#object_id</li>
+</ul>
+</div>
+      <div class='step' >
+    
+<h1>Hash</h1>
+</div>
+      <div class='step' >
+    
+<h2>Hash#select</h2>
+
+<ul>
+<li>Ruby 1.8:</li>
+</ul>
+<pre><code class='prettyprint ruby'>{'a' => 1, 'b' => 2}.select {|x, y| y.odd?}
+# => [["a", 1]]
+</code></pre>
+<ul>
+<li>Ruby 1.9:</li>
+</ul>
+<pre><code class='prettyprint ruby'>{'a' => 1, 'b' => 2}.select {|x, y| y.odd?}
+# => {"a"=>1}
+</code></pre></div>
+      <div class='step' >
+    
+<h2>Add new keys during interation</h2>
+
+<ul>
+<li>Ruby 1.8:</li>
+</ul>
+<pre><code class='prettyprint ruby'>h = {:a => 1, :b => 2}
+h.each {|k, v| h[k.to_s[0].succ.chr.to_sym] = v + 1 }
+# => {:b=>2, :e=>5, :c=>3, :d=>4, :a=>1}
+
+h = {'a' => 1, 'b' => 2}
+h.each {|k, v| h[k[0].succ.chr] = v + 1 }
+# => {"c"=>3, "b"=>2, "a"=>1}
+</code></pre>
+<ul>
+<li>Ruby 1.9:</li>
+</ul>
+
+<p><em>RuntimeError: can&#39;t add a new key into hash during iteration</em></p>
+</div>
+      <div class='step' >
+    
+<h1>Regex</h1>
+
+<h2>In ERB</h2>
+
+<p><em>warning: regexp match /.../n against to UTF-8 string</em></p>
+</div>
+      <div class='step' >
+    
+<h1>Date</h1>
+</div>
+      <div class='step' >
+    
+<h2>Date.new!</h2>
+
+<h2>Date.new0</h2>
+
+<h2>Date.new1</h2>
+
+<h2>Date.new2</h2>
+
+<h2>Date.new3</h2>
+</div>
+      <div class='step' >
+    <pre><code class='prettyprint ruby'>Date.new(2013, 9, 21).strftime  # => "2013-09-21"
+Date.new!(2013, 9, 21).strftime # => "-4707-06-07"
+Date.new0(2013, 9, 21).strftime # => "-4707-06-07"
+Date.new2(2013, 9, 21).strftime # => "2013-01-09"
+Date.new3(2013, 9, 21).strftime # => "2013-09-21"
+</code></pre></div>
+      <div class='step' >
+    
+<h2>new!, new0, new1: Julian day</h2>
+
+<blockquote>
+<p>儒略日的起点订在公元前4713年（天文学上记为 -4712年）1月1日格林威治时间平午（世界时12:00），即JD 0指定为UT时间B.C.4713年1月1日12:00到UC时间B.C.4713年1月2日12:00的24小时。每一天赋予了一个唯一的数字，顺数而下，如：1996年1月1日12:00:00的儒略日是2450084。这个日期是考虑了太阳、月亮的轨道运行周期，以及当时收税的间隔而订出来的。</p>
+</blockquote>
+
+<h2>new2</h2>
+<pre><code class='prettyprint ruby'>Date.new2(2013, 256).strftime
+# => "2013-09-13" # Programmers' Day!
+</code></pre></div>
+      <div class='step' >
+    
+<h2>Patch</h2>
+
+<style type="text/css">
+  #step-36 pre code { font-size: 55%; line-height: 20px; }
+</style>
+<pre><code class='prettyprint ruby'>require 'date'
+require 'tzinfo'
+
+unless DateTime.respond_to?(:new!) || DateTime.respond_to?(:new0)
+  module TZInfo
+    module RubyCoreSupport
+      HALF_DAYS_IN_DAY = rational_new!(1, 2)
+
+      def self.datetime_new!(ajd = 0, of = 0, sg = Date::ITALY)
+        jd = ajd + of + HALF_DAYS_IN_DAY
+
+        jd_i = jd.to_i
+        jd_i -= 1 if jd < 0
+        hours = (jd - jd_i) * 24
+        hours_i = hours.to_i
+        minutes = (hours - hours_i) * 60
+        minutes_i = minutes.to_i
+        seconds = (minutes - minutes_i) * 60
+
+        DateTime.jd(jd_i, hours_i, minutes_i, seconds, of, sg)
+      end
+    end
+  end
+end
+</code></pre>
+<blockquote>
+<p><a href="https://developer.uservoice.com/blog/2012/03/04/how-to-upgrade-a-rails-2-3-app-to-ruby-1-9-3/">Copy from: How to upgrade a Rails 2.3 app to Ruby 1.9.3</a></p>
+</blockquote>
+</div>
+      <div class='step' >
+    
+<h2>Date.exist?</h2>
+
+<ul>
+<li><p>Ruby 1.8:</p>
+
+<ul>
+<li>Date.exist?</li>
+<li>Date.exist1?</li>
+<li>Date.exist2?</li>
+<li>Date.exist3?</li>
+</ul></li>
+<li><p>Ruby 1.9:</p>
+
+<ul>
+<li>Date.valid_date?</li>
+<li>Date.valid_jd?</li>
+<li>Date.valid_original?</li>
+</ul></li>
+</ul>
+</div>
+      <div class='step' >
+    
+<h2>ParseDate</h2>
+
+<ul>
+<li>Ruby 1.8:</li>
+</ul>
+<pre><code class='prettyprint ruby'>require 'parsedate'
+ParseDate.parsedate "Tuesday, July 5th, 2007, 18:35:20 UTC"
+# => [2007, 7, 5, 18, 35, 20, "UTC", 2]
+</code></pre>
+<ul>
+<li>Ruby 1.9:</li>
+</ul>
+<pre><code class='prettyprint ruby'>require 'date'
+Date._parse(str, comp).
+  values_at(:year, :mon, :mday, :hour, :min, :sec, :zone, :wday)
+</code></pre></div>
+      <div class='step' >
+    
+<h2>Time.now</h2>
+
+<ul>
+<li>Ruby 1.8: Thu Sep 19 22:55:12 +0800 2013</li>
+<li>Ruby 1.9: 2013-09-19 22:55:12 +0800</li>
+</ul>
+</div>
+      <div class='step' >
+    
+<h2>BigDecimal</h2>
+<pre><code class='prettyprint ruby'>require 'bigdecimal'
+require 'bigdecimal/util'
+99.99.to_d.to_s
+</code></pre>
+<ul>
+<li>Ruby 1.8:</li>
+</ul>
+<pre><code class='prettyprint ruby'># => '0.9999E2'
+</code></pre>
+<ul>
+<li>Ruby 1.9:</li>
+</ul>
+<pre><code class='prettyprint ruby'># => '0.9998999999999999E2'
+</code></pre></div>
+      <div class='step' >
+    
+<h1>File</h1>
+
+<ul>
+<li>Ruby 1.8:</li>
+</ul>
+<pre><code class='prettyprint ruby'>require 'ftools'
+File::copy(src, dst)
+File::rename(old, new)
+</code></pre>
+<ul>
+<li>Ruby 1.9:</li>
+</ul>
+<pre><code class='prettyprint ruby'>require 'fileutils'
+FileUtils.cp(src, dst)
+File.rename(old, new)
+</code></pre></div>
+      <div class='step' >
+    
+<h2>No RDoc::Usage any more</h2>
+</div>
+      <div class='step' >
+    
+<h1>Thanks</h1>
+</div>
+      <div class='step' >
+    
+      </div>
+    <script src="js/impress.js"></script>
+    <script>impress().init();</script>
   </body>
 </html>
+    
